@@ -1,0 +1,11 @@
+name = "Floating Button Menu"
+description = "An example module used to learn module development and forms creation."
+core = 7.x
+package = Own
+
+; NEW LINE
+configure = admin/config/user-interface/float-btn-menu
+
+dependencies[]=menu
+
+stylesheets[all][] = css/float-btn-menu.css
