@@ -1,5 +1,5 @@
 name = "Floating Button Menu"
-description = "An example module used to learn module development and forms creation."
+description = "Allows you to animates on to the page as an expanding menu with menu items as per your choice."
 core = 7.x
 package = Own
 
