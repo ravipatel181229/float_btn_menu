@@ -1,0 +1,202 @@
+<?php
+
+define('FLOAT_BTN_MENU_SELECTED', "user-menu");
+define('FLOAT_BTN_MENU_ANNONYMOUS_ACCESS',1);
+define('FLOAT_BTN_MENU_COLOR',"#FF3333");
+define('FLOAT_BTN_MENU_LINK_COLOR',"#FF3333");
+define('FLOAT_BTN_MENU_POSITION',"right");
+define('FLOAT_BTN_MENU_SHAPE',"circle");
+
+function float_btn_menu_admin() {
+  $form = array();
+  
+	$form['float_btn_menu_menuselect'] = array(
+		'#type' => 'select',
+		'#title' => t('Please select menu'),
+		'#options' => get_menus(),
+		'#default_value' => variable_get('float_btn_menu_menuselect', FLOAT_BTN_MENU_SELECTED),
+		'#description' => t("This menu item will be shown in float button menu."),
+		'#required' => TRUE,
+	);
+	
+	$form['float_btn_menu_color'] = array(
+		'#type' => 'textfield', 
+		'#title' => t('Menu Color'), 
+		'#description' => t("Entered color will be applied for float Menu Toggle Button. (Ex. #FF3333)"),
+		'#default_value' =>variable_get('float_btn_menu_color', FLOAT_BTN_MENU_COLOR),
+		'#maxlength' => 7,		
+	);
+	
+	$form['float_btn_menu_link_color'] = array(
+		'#type' => 'textfield', 
+		'#title' => t('Menu links Color'), 
+		'#description' => t("Entered color will be applied for float Menu Links buttons. (Ex. #FF3333)"),
+		'#default_value' =>variable_get('float_btn_menu_link_color', FLOAT_BTN_MENU_LINK_COLOR),
+		'#maxlength' => 7,		
+	);
+	
+	$form['float_btn_menu_position'] = array(
+		'#type' => 'radios', 
+		'#title' => t('Menu Position'), 
+		'#description' => t("Select position where you want to show float menu."),
+		'#options' => array('left'=>"Left Bottom",'right'=>"Right Bottom"),
+		'#default_value' =>variable_get('float_btn_menu_position', FLOAT_BTN_MENU_POSITION),
+	);
+	
+	$form['float_btn_menu_shape'] = array(
+		'#type' => 'radios', 
+		'#title' => t('Menu Shape'), 
+		'#description' => t("Select Shape of menu you want."),
+		'#options' => array('square'=>"Square",'circle'=>"Circle"),
+		'#default_value' =>variable_get('float_btn_menu_shape', FLOAT_BTN_MENU_SHAPE),
+	);
+	
+	$form['float_btn_menu_show_annonymous'] = array(
+		'#type' =>	'checkbox', 
+		'#title' => t('Visible to Annonymous user'),
+		'#default_value' => variable_get('float_btn_menu_show_annonymous', FLOAT_BTN_MENU_ANNONYMOUS_ACCESS)
+
+	);
+	
+
+  return system_settings_form($form);
+
+}
+
+function float_btn_menu_menu() {
+
+  $items = array();
+
+  $items['admin/config/user-interface/float-btn-menu'] = array(
+    'title' => 'Floating Button Menu settings',
+    'description' => 'Set Float Buuton Menu Colors, Position, Shape, etc.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('float_btn_menu_admin'),
+    'access arguments' => array('administer float button menu settings'),
+    'type' => MENU_NORMAL_ITEM,
+   );
+
+  return $items;
+}
+
+function float_btn_menu_admin_validate($form, &$form_state) {
+	$menu_selected = $form_state['values']['float_btn_menu_menuselect'];
+	$color = $form_state['values']['float_btn_menu_color'];
+	$link_color = $form_state['values']['float_btn_menu_link_color'];
+	if (!(preg_match('/(#[a-f0-9]{3}([a-f0-9]{3})?)/i', $color, $match))) {		
+		form_set_error('float_btn_menu_color', t('Please enter valid color code.'));
+	}
+	if (!(preg_match('/(#[a-f0-9]{3}([a-f0-9]{3})?)/i', $link_color, $match))) {		
+		form_set_error('float_btn_menu_link_color', t('Please enter valid color code.'));
+	}
+}
+
+
+/* render menu to page*/
+function float_btn_menu_page_alter(&$page) { 
+	$show_annonymous=variable_get('float_btn_menu_show_annonymous', FLOAT_BTN_MENU_ANNONYMOUS_ACCESS);
+	if((($show_annonymous) || (!$show_annonymous && user_is_logged_in())) && (!(path_is_admin(current_path()))))
+	{
+		$page['page_bottom']['floating_btn_menu'] = array(
+			'#markup' => float_btn_menu_markup(), 
+			'#weight' => 25
+		); 
+	}
+}
+function float_btn_menu_markup() {
+
+global $base_url;
+$menu_color=variable_get('float_btn_menu_color', FLOAT_BTN_MENU_COLOR);
+$menu_links_color=variable_get('float_btn_menu_link_color', FLOAT_BTN_MENU_LINK_COLOR);
+$menu_position=variable_get('float_btn_menu_position', FLOAT_BTN_MENU_POSITION);
+$menu_shape=variable_get('float_btn_menu_shape', FLOAT_BTN_MENU_SHAPE);
+$menu_links=get_menu_links();
+$tooltip_position="left";
+$border_radius='50px';
+if($menu_shape=="square"){
+	$border_radius='0';
+}
+
+
+$return = '<div class="float-btn-menu"><a href="#" class="float" id="menu-share" style="background-color:'.$menu_color.';'.$menu_position.':40px;border-radius:'.$border_radius.'">
+<button class="menu-toggle">
+        <span class="toggle-bar"></span>
+        <span class="toggle-bar"></span>
+        <span class="toggle-bar"></span>                        
+      </button>
+</a>
+<ul';
+if($menu_position=="left"){
+	$return .=' style='.$menu_position.':0px;right:initial;';
+	$tooltip_position="right";
+}
+$return .='>';
+$temp="";
+
+
+	foreach($menu_links as $key=>$value)
+	{
+		foreach($value as $k=>$v){
+			if($k=="link_title"){
+				$temp=$v;
+			}
+			if($k=="router_path"){
+				$return.='<li class="tooltip"><span class="tooltip-'.$tooltip_position.'">'.$temp.'</span><a href="'.$base_url.'/'.$v.'"  style="background-color:'.$menu_links_color.';border-radius:'.$border_radius.'">
+				<i class="fa fa-facebook my-float"></i>'.substr($temp,0,1).'</a></li>';
+			}
+		}
+		
+	}
+
+$return.='</ul></div>';
+
+  return $return;
+}
+
+
+/* get menus to select in admin configuration*/
+function get_menus(){
+
+  //Use Database API to retrieve current posts.
+  $query = db_select('menu_custom', 'n')
+    ->fields('n', array('menu_name', 'title'))
+    ->orderBy('menu_name', 'DESC') //Most recent first.
+    ->execute()
+    ->fetchAll();
+
+  $menu_titles=array();
+  $temp;
+	foreach($query as $key=>$val){
+		foreach($val as $k=>$v){
+		
+			if($k=='menu_name'){
+				$menu_titles[$v]="";
+				$temp=$v;
+			}
+			if($k=='title'){
+				/*array_push($menu_titles,$v);*/
+				$menu_titles[$temp]=$v;
+				$temp="";
+			}
+		}
+	}
+  return $menu_titles;  
+}
+
+
+/* get menu links to show btns as per selected menu*/
+function get_menu_links(){
+	$menu=variable_get('float_btn_menu_menuselect', FLOAT_BTN_MENU_SELECTED);
+	
+	$query = db_select('menu_links', 'n')
+    ->fields('n', array('menu_name', 'link_title', 'router_path', 'options'))
+    ->condition('menu_name', $menu)
+    ->orderBy('menu_name', 'DESC') //Most recent first.
+    ->execute()
+    ->fetchAll();
+	
+	return $query;
+}
+
+
+?>
