@@ -42,7 +42,7 @@ function float_btn_menu_menu() {
 
   $items['admin/config/user-interface/float-btn-menu'] = array(
     'title' => 'Floating Button Menu settings',
-    'description' => 'Description of your On this date settings page',
+    'description' => 'You can set menu,colors,access of Floating button menu.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('float_btn_menu_admin'),
     'access arguments' => array('administer float button menu settings'),
