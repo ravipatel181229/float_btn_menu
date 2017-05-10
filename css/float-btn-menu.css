@@ -1,75 +1,74 @@
-/* Floating buttons*/
 .float-btn-menu .float{
-	position:fixed;
-	width:60px;
-	height:60px;
-	bottom:40px;
-	right:40px;
-	background-color:#F33;
-	color:#FFF;
-	border-radius:50px;
-	text-align:center;
-	box-shadow: 0 3px 3px 0 rgba(0,0,0,0.14), 0 1px 7px 0 rgba(0,0,0,0.12), 0 3px 1px -1px rgba(0,0,0,0.2);
-	z-index:1000;
-	animation: bot-to-top 2s ease-out;
+  position:fixed;
+  width:60px;
+  height:60px;
+  bottom:40px;
+  right:40px;
+  background-color:#F33;
+  color:#FFF;
+  border-radius:50px;
+  text-align:center;
+  box-shadow: 0 3px 3px 0 rgba(0,0,0,0.14), 0 1px 7px 0 rgba(0,0,0,0.12), 0 3px 1px -1px rgba(0,0,0,0.2);
+  z-index:1000;
+  animation: bot-to-top 2s ease-out;
 }
 .float-btn-menu .float .menu-toggle{
-	position: relative;
-    float: right;
-    padding: 9px 10px;
-    background-color: transparent;
-    background-image: none;
-    border: 1px solid transparent;
-    border-radius: 4px;
-	margin: 9px;
+  position: relative;
+  float: right;
+  padding: 9px 10px;
+  background-color: transparent;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  margin: 9px;
 }
 
 .float-btn-menu .float .menu-toggle .toggle-bar{
-    display: block;
-    width: 22px;
-    height: 2px;
-    border-radius: 1px;
-	background-color: #fff;
-    margin-top: 4px;	
+  display: block;
+  width: 22px;
+  height: 2px;
+  border-radius: 1px;
+  background-color: #fff;
+  margin-top: 4px;	
 }
 
 .float-btn-menu ul{
-	position:fixed;
-	right:40px;
-	padding-bottom:20px;
-	bottom:80px;
-	z-index:100;
+  position:fixed;
+  right:40px;
+  padding-bottom:20px;
+  bottom:80px;
+  z-index:100;
 }
 
 .float-btn-menu ul li{
-	list-style:none;
-	margin-bottom:10px;
+  list-style:none;
+  margin-bottom:10px;
 }
 
 .float-btn-menu ul li a{
-	background-color:#F33;
-	color:#FFF;
-	border-radius:50px;
-	text-align:center;
-	box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
-	width:55px;
-	height:55px;
-	display:block;	
-    font-size: 20px;
-    line-height: 50px;
-    font-family: cursive;	
-    text-decoration: none;
+  background-color:#F33;
+  color:#FFF;
+  border-radius:50px;
+  text-align:center;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+  width:55px;
+  height:55px;
+  display:block;	
+  font-size: 20px;
+  line-height: 50px;
+  font-family: cursive;	
+  text-decoration: none;
 }
 
 .float-btn-menu ul:hover{
-	visibility:visible!important;
-	opacity:1!important;
+  visibility:visible!important;
+  opacity:1!important;
 }
 
 
 .float-btn-menu .my-float{
-	font-size:24px;
-	margin-top:18px;
+  font-size:24px;
+  margin-top:18px;
 }
 
 .float-btn-menu a#menu-share + ul{
@@ -82,67 +81,93 @@
 }
 
 .float-btn-menu a#menu-share i{
-	animation: rotate-in 0.5s;
+  animation: rotate-in 0.5s;
 }
 
 .float-btn-menu a#menu-share:hover > i{
-	animation: rotate-out 0.5s;
+  animation: rotate-out 0.5s;
 }
 
 @keyframes bot-to-top {
-    0%   {bottom:-40px}
-    50%  {bottom:40px}
+  0%   {bottom:-40px}
+  50%  {bottom:40px}
 }
 
 @keyframes scale-in {
-    from {transform: scale(0);opacity: 0;}
-    to {transform: scale(1);opacity: 1;}
+  from {transform: scale(0);opacity: 0;}
+  to {transform: scale(1);opacity: 1;}
 }
 
 @keyframes rotate-in {
-    from {transform: rotate(0deg);}
-    to {transform: rotate(360deg);}
+  from {transform: rotate(0deg);}
+  to {transform: rotate(360deg);}
 }
 
 @keyframes rotate-out {
-    from {transform: rotate(360deg);}
-    to {transform: rotate(0deg);}
+  from {transform: rotate(360deg);}
+  to {transform: rotate(0deg);}
 }
 
 
 /* Tooltip container */
 .float-btn-menu .tooltip {
-    position: relative;
+  position: relative;
 }
 
 /* Tooltip text */
-.float-btn-menu .tooltip .tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    top: -5px;
-    right: 110%;	
-    overflow-wrap: break-word;
+.float-btn-menu .tooltip .tooltip-left {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  right: 110%;	
+  overflow-wrap: break-word;
 }
 
-.float-btn-menu .tooltip .tooltiptext::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 100%;
-    margin-top: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent transparent transparent black;
+.float-btn-menu .tooltip .tooltip-left::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent transparent black;
+}
+
+.float-btn-menu .tooltip .tooltip-right {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  left: 110%;	
+  overflow-wrap: break-word;
+}
+.float-btn-menu .tooltip .tooltip-right::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent black transparent transparent;
 }
 
 /* Show the tooltip text when you mouse over the tooltip container */
-.float-btn-menu .tooltip:hover .tooltiptext {
-    visibility: visible;
+.float-btn-menu .tooltip:hover .tooltip-right,
+.float-btn-menu .tooltip:hover .tooltip-left {
+  visibility: visible;
 }
