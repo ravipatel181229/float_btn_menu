@@ -2,9 +2,6 @@ name = "Floating Button Menu"
 description = "Allows you to animates on to the page as an expanding menu with menu items as per your choice."
 core = 7.x
 package = User interface
-
 configure = admin/config/user-interface/float-btn-menu
-
 dependencies[]=menu
-
 stylesheets[all][] = css/float-btn-menu.css
